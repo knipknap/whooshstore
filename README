@@ -1,6 +1,6 @@
 = Whooshstore =
 
-This is a simple Python library for indexing and searching files
+This is a simple Python module for indexing and searching files
 on your local hard drive. It supports incremental indexing, pagination,
 and provides an API.
 
