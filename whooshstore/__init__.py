@@ -46,6 +46,7 @@ def update_index(files,
                  ix           = 'indexdir',
                  incremental  = False,
                  batch        = False,
+                 tmpdir       = None,
                  on_next_file = None):
     """
     Updates the given index. If an index object is not passed, it is
@@ -58,12 +59,12 @@ def update_index(files,
 
     # Index the file content.
     if batch:
-        writer = ix.writer()
+        writer = ix.writer(dir = tmpdir)
     for fileno, filename in enumerate(files, 1):
         if on_next_file:
             on_next_file(fileno, filename)
         if not batch:
-            writer = ix.writer()
+            writer = ix.writer(dir = tmpdir)
         if incremental:
             writer.delete_by_term('filename', filename)
         for number, line in enumerate(codecs.open(filename, 'r', 'latin-1'), 1):

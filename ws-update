@@ -45,6 +45,11 @@ parser.add_option('--batch', '-b',
                   help    = '''
 Update all in memory, then save only once at the end.
 Much faster, but requires much more memory.'''.strip())
+parser.add_option('--tmpdir',
+                  dest    = 'tmpdir',
+                  metavar = 'STRING',
+                  default = None,
+                  help    = 'Custom directory for temporaty data')
 parser.add_option('--index', '-i',
                   dest    = 'index',
                   metavar = 'STRING',
@@ -92,6 +97,7 @@ update_index(files,
              ix = ix,
              incremental = options.append,
              batch = options.batch,
+             tmpdir = options.tmpdir,
              on_next_file = _on_next_file)
 
 _print_status('Indexing completed.\n')
