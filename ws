@@ -66,4 +66,6 @@ else:
                      limit = options.limit)
 
 for result in results:
-    print '%s:%d: %s' % (result['filename'], result['number'], result['line'])
+    print '%s:%d: %s' % (result['filename'],
+                         result['number'],
+                         result['line'].encode('ascii', 'ignore'))
