@@ -49,7 +49,7 @@ parser.add_option('--tmpdir',
                   dest    = 'tmpdir',
                   metavar = 'STRING',
                   default = None,
-                  help    = 'Custom directory for temporaty data')
+                  help    = 'Custom directory for temporary data')
 parser.add_option('--index', '-i',
                   dest    = 'index',
                   metavar = 'STRING',
