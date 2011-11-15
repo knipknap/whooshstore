@@ -1,6 +1,10 @@
 import sys, os
 from setuptools import setup, find_packages
-from whooshstore import __version__
+
+# Import the file that contains the version number.
+src_dir = os.path.join(os.path.dirname(__file__), 'whooshstore')
+sys.path.insert(0, src_dir)
+from version import __version__
 
 # Import the project description from the README.
 readme = open('README').read()
