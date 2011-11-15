@@ -89,7 +89,7 @@ def _on_next_file(fileno, filename):
 
 # Index the file content.
 update_index(files,
-             index = ix,
+             ix = ix,
              incremental = options.append,
              batch = options.batch,
              on_next_file = _on_next_file)
