@@ -62,7 +62,7 @@ if options.page is not None:
         parser.error(e)
 else:
     results = search(querystring,
-                     index = options.index,
+                     ix    = options.index,
                      limit = options.limit)
 
 for result in results:
