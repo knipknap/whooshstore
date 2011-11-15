@@ -43,13 +43,13 @@ parser.add_option('--batch', '-b',
                   action  = 'store_true',
                   default = False,
                   help    = '''
+Update all in memory, then save only once at the end.
+Much faster, but requires much more memory.'''.strip())
 parser.add_option('--index', '-i',
                   dest    = 'index',
                   metavar = 'STRING',
                   default = 'indexdir',
                   help    = 'Use the given index directory')
-Update all in memory, then save only once at the end.
-Much faster, but requires much more memory.'''.strip())
 
 # Parse options.
 options, args = parser.parse_args(sys.argv)
