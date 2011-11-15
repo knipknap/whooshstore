@@ -1,0 +1,82 @@
+import sys
+from optparse import OptionParser
+from whooshstore import __version__, util, open_index, update_index
+
+# Define CLI syntax.
+parser = OptionParser(usage = '%prog [options] dirname', version = __version__)
+parser.add_option('--quite', '-q',
+                  dest    = 'quite',
+                  action  = 'store_true',
+                  default = False,
+                  help    = 'Suppress status messages')
+parser.add_option('--verbose', '-v',
+                  dest    = 'verbose',
+                  action  = 'store_true',
+                  default = False,
+                  help    = 'Print name of files currently index')
+parser.add_option('--append', '-a',
+                  dest    = 'append',
+                  default = False,
+                  help    = 'Add to the existing index without clearing it')
+parser.add_option('--pattern', '-p',
+                  dest    = 'pattern',
+                  metavar = 'STRING',
+                  default = '*',
+                  help    = 'Only index files that match the given pattern')
+parser.add_option('--batch', '-b',
+                  dest    = 'batch',
+                  action  = 'store_true',
+                  default = False,
+                  help    = '''
+parser.add_option('--index', '-i',
+                  dest    = 'index',
+                  metavar = 'STRING',
+                  default = 'indexdir',
+                  help    = 'Use the given index directory')
+Update all in memory, then save only once at the end.
+Much faster, but requires much more memory.'''.strip())
+
+# Parse options.
+options, args = parser.parse_args(sys.argv)
+args.pop(0)
+
+try:
+    datadir = args.pop(0)
+except IndexError:
+    parser.error('missing directory name')
+
+# Create the index, if it does not exist yet.
+ix = open_index(options.index, options.append)
+
+# Collect file names.
+patterns = options.pattern.split(',')
+if not options.quite:
+    print 'Searching %s in %s...' % (','.join(patterns), datadir)
+files = list(util.find_files(datadir, patterns))
+
+# Initial status information.
+status_length = 0
+def _print_status(message):
+    if options.quite:
+        return
+    global status_length
+    sys.stdout.write('\b \b' * status_length)
+    status_length = len(message)
+    sys.stdout.write(message)
+status = 'Indexing %d files (%d%%)'
+_print_status(status % (len(files), 0))
+
+def _on_next_file(fileno, filename):
+    if options.verbose:
+        print filename
+    else:
+        _print_status(status % (len(files), float(100) / len(files) * fileno))
+
+# Index the file content.
+update_index(files,
+             index = ix,
+             incremental = options.append,
+             batch = options.batch,
+             on_next_file = _on_next_file)
+
+_print_status('Indexing completed.\n')

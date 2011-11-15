@@ -1,0 +1,12 @@
+*.py[co]
+*.egg-info
+*.swp
+build
+dist
+unit_test.cfg
+
+# Vim temporaries
+.swp
+.swo
+.*.swp
+.*.swo
