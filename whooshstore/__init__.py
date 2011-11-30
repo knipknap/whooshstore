@@ -63,6 +63,8 @@ def update_index(files,
     for fileno, filename in enumerate(files, 1):
         if on_next_file:
             on_next_file(fileno, filename)
+        if not os.path.exists(filename):
+            continue # File may have disappeared after we found it.
         if not batch:
             writer = ix.writer(dir = tmpdir)
         if incremental:
