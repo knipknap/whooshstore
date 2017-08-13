@@ -1,9 +1,9 @@
 Whooshstore
 ===========
 
-This is a simple Python module for indexing and searching files
+Whooshstore is a simple Python module for indexing and searching files
 on your local hard drive. It supports incremental indexing, pagination,
-and provides an API.
+and provides a Python API as well as a command line tool.
 
 Example CLI usage
 -----------------

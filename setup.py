@@ -7,10 +7,11 @@ sys.path.insert(0, src_dir)
 from version import __version__
 
 # Import the project description from the README.
-readme = open('README').read()
-start  = readme.index('\n\n')
-end    = readme.index('\n\n=')
-descr  = readme[start:end].strip()
+descr  = '''
+Whooshstore is a simple Python module for indexing and searching files
+on your local hard drive. It supports incremental indexing, pagination,
+and provides a Python API as well as a command line tool.
+'''.strip()
 
 # Run the setup.
 setup(name             = 'whooshstore',
