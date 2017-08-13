@@ -26,6 +26,7 @@ setup(name             = 'whooshstore',
       packages         = find_packages(),
       scripts          = ['scripts/ws-update', 'scripts/ws'],
       install_requires = ['Whoosh'],
+      test_suite='tests',
       keywords         = 'index search whoosh grep id-utils fulltext',
       url              = 'http://github.com/knipknap/whooshstore',
       classifiers      = [
