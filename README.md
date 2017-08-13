@@ -1,12 +1,12 @@
 Whooshstore
------------
+===========
 
 This is a simple Python module for indexing and searching files
 on your local hard drive. It supports incremental indexing, pagination,
 and provides an API.
 
 Example CLI usage
-=================
+-----------------
 
 ```
 ws-update -b --index my.idx datadir  # build the index
@@ -18,7 +18,7 @@ ws --help  # complete command line syntax
 ```
 
 Python API
-==========
+----------
 
 ```python
 from whooshstore import util, open_index, update_index, search
