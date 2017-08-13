@@ -18,43 +18,43 @@ from optparse import OptionParser
 from whooshstore import __version__, util, open_index, update_index
 
 # Define CLI syntax.
-parser = OptionParser(usage = '%prog [options] dirname', version = __version__)
+parser = OptionParser(usage='%prog [options] dirname', version=__version__)
 parser.add_option('--quite', '-q',
-                  dest    = 'quite',
-                  action  = 'store_true',
-                  default = False,
-                  help    = 'Suppress status messages')
+                  dest='quite',
+                  action='store_true',
+                  default=False,
+                  help='Suppress status messages')
 parser.add_option('--verbose', '-v',
-                  dest    = 'verbose',
-                  action  = 'store_true',
-                  default = False,
-                  help    = 'Print name of files currently index')
+                  dest='verbose',
+                  action='store_true',
+                  default=False,
+                  help='Print name of files currently index')
 parser.add_option('--append', '-a',
-                  dest    = 'append',
-                  default = False,
-                  help    = 'Add to the existing index without clearing it')
+                  dest='append',
+                  default=False,
+                  help='Add to the existing index without clearing it')
 parser.add_option('--pattern', '-p',
-                  dest    = 'pattern',
-                  metavar = 'STRING',
-                  default = '*',
-                  help    = 'Only index files that match the given pattern')
+                  dest='pattern',
+                  metavar='STRING',
+                  default='*',
+                  help='Only index files that match the given pattern')
 parser.add_option('--batch', '-b',
-                  dest    = 'batch',
-                  action  = 'store_true',
-                  default = False,
-                  help    = '''
+                  dest='batch',
+                  action='store_true',
+                  default=False,
+                  help='''
 Update all in memory, then save only once at the end.
 Much faster, but requires much more memory.'''.strip())
 parser.add_option('--tmpdir',
-                  dest    = 'tmpdir',
-                  metavar = 'STRING',
-                  default = None,
-                  help    = 'Custom directory for temporary data')
+                  dest='tmpdir',
+                  metavar='STRING',
+                  default=None,
+                  help='Custom directory for temporary data')
 parser.add_option('--index', '-i',
-                  dest    = 'index',
-                  metavar = 'STRING',
-                  default = 'indexdir',
-                  help    = 'Use the given index directory')
+                  dest='index',
+                  metavar='STRING',
+                  default='indexdir',
+                  help='Use the given index directory')
 
 # Parse options.
 options, args = parser.parse_args(sys.argv)
@@ -76,6 +76,8 @@ files = list(util.find_files(datadir, patterns))
 
 # Initial status information.
 status_length = 0
+
+
 def _print_status(message):
     if options.quite:
         return
@@ -86,6 +88,7 @@ def _print_status(message):
 status = 'Indexing %d files (%d%%)'
 _print_status(status % (len(files), 0))
 
+
 def _on_next_file(fileno, filename):
     if options.verbose:
         print filename
@@ -94,10 +97,10 @@ def _on_next_file(fileno, filename):
 
 # Index the file content.
 update_index(files,
-             ix = ix,
-             incremental = options.append,
-             batch = options.batch,
-             tmpdir = options.tmpdir,
-             on_next_file = _on_next_file)
+             ix=ix,
+             incremental=options.append,
+             batch=options.batch,
+             tmpdir=options.tmpdir,
+             on_next_file=_on_next_file)
 
 _print_status('Indexing completed.\n')

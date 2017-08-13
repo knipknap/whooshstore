@@ -1,6 +1,7 @@
 import os
 import fnmatch
 
+
 def filter_by_pattern(input, patterns):
     if patterns is None:
         return input
@@ -9,7 +10,8 @@ def filter_by_pattern(input, patterns):
         output.update(fnmatch.filter(input, pattern))
     return output
 
-def find_files(directory, patterns = None):
+
+def find_files(directory, patterns=None):
     """
     If patterns is None, return all files from the given directory.
     """

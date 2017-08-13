@@ -31,6 +31,7 @@ dirname = os.path.dirname(__file__)
 data_dir = os.path.join(dirname, 'data')
 index_dir = os.path.join(dirname, 'index')
 
+
 def _dosearch(ix, term, limit=None):
     result = search(term, ix=ix, limit=limit)
     result_dict = {}
@@ -38,6 +39,7 @@ def _dosearch(ix, term, limit=None):
         key = hit['filename'] + '/' + str(hit['number'])
         result_dict[key] = hit['line']
     return result_dict
+
 
 class whooshstoreTest(unittest.TestCase):
 
@@ -64,6 +66,7 @@ class whooshstoreTest(unittest.TestCase):
         # Another test.
         result = _dosearch(ix, 'line')
         self.assertEqual(6, len(result))
+
 
 def suite():
     return unittest.TestLoader().loadTestsFromTestCase(whooshstoreTest)
