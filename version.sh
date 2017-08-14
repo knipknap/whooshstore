@@ -21,7 +21,7 @@ if [ ! -z "$1" ]; then
   VERSION=$1
 else
   HEAD=`git log -1 --pretty=format:%H HEAD`
-  VERSION=`git describe $HEAD --tags --match "v[0-9]*" | sed 's/-/./' 2>/dev/null`
+  VERSION=`git describe $HEAD --tags --match "v[0-9]*" | sed 's/^v//;s/-[^\-]*$//;s/-/./' 2>/dev/null`
   if [ -z "$VERSION" ]; then
     echo >&2 No matching tag was found.
     exit 1
@@ -38,7 +38,7 @@ echo Version is $VERSION
 # Check whether the version file already contains this number,
 # and only touch it if there is a change to avoid changing
 # the timestamp.
-VERSION_FILE_TMP=`tempfile`
+VERSION_FILE_TMP=`mktemp`
 cat $VERSION_IN | sed "s/@VERSION@/$VERSION/g" > $VERSION_FILE_TMP
 if diff -q $VERSION_FILE_TMP $VERSION_FILE; then
   echo Version file unchanged.
