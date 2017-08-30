@@ -1,6 +1,6 @@
+from builtins import str
 import os
 import fnmatch
-
 
 def filter_by_pattern(input, patterns):
     if patterns is None:
@@ -17,4 +17,4 @@ def find_files(directory, patterns=None):
     """
     for root, dirnames, filenames in os.walk(directory):
         for filename in filter_by_pattern(filenames, patterns):
-            yield unicode(os.path.join(root, filename), 'latin-1')
+            yield str(os.path.join(root, filename))

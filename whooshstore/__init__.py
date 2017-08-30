@@ -71,10 +71,11 @@ def update_index(files,
             writer = ix.writer(dir=tmpdir)
         if incremental:
             writer.delete_by_term('filename', filename)
-        for number, line in enumerate(codecs.open(filename, 'r', 'latin-1'), 1):
-            writer.add_document(filename=filename,
-                                number=number,
-                                line=line.rstrip('\n'))
+        with codecs.open(filename, 'r', 'latin-1') as fp:
+            for number, line in enumerate(fp, 1):
+                writer.add_document(filename=filename,
+                                    number=number,
+                                    line=line.rstrip('\n'))
         if not batch:
             writer.commit()
     if batch:
